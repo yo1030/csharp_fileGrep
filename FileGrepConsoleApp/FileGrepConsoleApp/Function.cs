@@ -8,30 +8,30 @@ namespace FileGrepConsoleApp
 {
     internal class Function
     {
-        internal string[] getSampleDirectory(string path)
+        internal List<string> getSampleDirectory(string path)
         {
-            string[] directories = Directory.GetDirectories(path.ToLower(), "*_sample*");
-            while (directories.Length == 0)
+            List<string> directories = Directory.GetDirectories(path.ToLower(), "*_sample*").ToList();
+            while (directories.Count == 0)
             {
                 DirectoryInfo? parentDirInfo = Directory.GetParent(path);
                 if (parentDirInfo == null)
                 {
-                    directories[0] = "Error:can't find sample directory";
+                    directories.Add("Error:can't find sample directory");
                 }
                 else
                 {
                     path = parentDirInfo.FullName;
-                    directories = Directory.GetDirectories(path.ToLower(), "*_sample*");
+                    directories = Directory.GetDirectories(path.ToLower(), "*_sample*").ToList();
                 }
             }
             return directories;
         }
-        internal void createResult(string[] targetDir)
+        internal void createResult(List<string> targetDir)
         {
             bool isHTML = false;
             bool isPHP = false;
             bool isCSHARP = false;
-            for (int i = 0;i < targetDir.Length; i++)
+            for (int i = 0;i < targetDir.Count; i++)
             {
                 string targetDirName = targetDir[i];
                 DirectoryInfo targetDirInfo = new DirectoryInfo(targetDirName);

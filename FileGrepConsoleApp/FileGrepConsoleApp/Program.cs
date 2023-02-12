@@ -6,5 +6,10 @@ using FileGrepConsoleApp;
 string curDir = Environment.CurrentDirectory;
 Function fc = new Function();
 
-string[] sampleDir = fc.getSampleDirectory(curDir);
+List<string> sampleDir = fc.getSampleDirectory(curDir);
+if (sampleDir[0].IndexOf("error", StringComparison.CurrentCultureIgnoreCase) != -1)
+{
+    Console.WriteLine(sampleDir[0]);
+    return;
+}
 fc.createResult(sampleDir);
